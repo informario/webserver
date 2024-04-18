@@ -1,0 +1,103 @@
+body {
+  background-image: url(https://drive.google.com/uc?export=view&id=1e616fEsmOfbcMua9yHyjXr1ZsGB1ywew);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  padding: 20px;
+  color:#ffffff
+}
+
+h1 {
+  font-size: 50px;
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: 272C4E;
+  background-color: #272C4E;
+}
+/*EECA7D*/
+h2 {
+  font-size: 30px;
+  color: #ffffff;
+}
+
+.aclaracion {
+  font-style: italic;
+  margin: 5px
+}
+
+h1, h2, p {
+  text-align: center;
+}
+
+.menu {
+  width: 80%;
+  background-color: #272C4E;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  max-width: 500px;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%
+}
+
+hr {
+  height: 2px;
+  background-color: #ffffff;
+  border-color: #ffffff;
+}
+
+.bottom-line {
+  margin-top: 25px;
+}
+
+
+.item p {
+  display: inline-block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+.flavor, .dessert {
+  text-align: left;
+  width: 75%;
+}
+
+.price {
+  text-align: right;
+  width: 25%;
+}
+
+footer {
+  font-size: 14px;
+}
+
+.address {
+  margin-bottom: 5px;
+}
+
+a {
+  color: white;
+}
+
+a:visited {
+  color: rgb(195, 137, 250);
+}
+
+a:hover {
+  color: rgb(255, 118, 255);
+}
+
+a:active {
+  color: rgb(142, 142, 248);
+}
+
+section[type="indice links"]{
+  display:block;
+  border-color:black;
+  color:white;
+}
+

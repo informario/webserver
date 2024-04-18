@@ -1,0 +1,80 @@
+:root {
+    --x-ship:20px;
+    --y-ship:20px;
+    --x-enemy0:20px;
+    --y-enemy0:20px;
+    --x-enemy1:20px;
+    --y-enemy1:20px;
+    --x-enemy2:20px;
+    --y-enemy2:20px;
+    --x-enemy3:20px;
+    --y-enemy3:20px;
+
+}
+
+body{
+    background-color: rgb(23, 11, 34);
+}
+
+.borde{
+    position : absolute;
+    top:0;
+    left:0;
+    width:500px;
+    height:500px;
+    border-width:2px;
+    border-style:solid;
+    border-color:blue;
+    padding:0;
+    margin:0;
+}
+body{
+    color:white;
+    font-family: monospace;
+}
+.descripcion{
+    position:absolute;
+    top:500px;
+}
+
+.ship{
+    position : absolute;
+    width : 20px;
+    height : 20px;
+    background-color : white;
+    top:var(--y-ship);
+    left:var(--x-ship);
+}
+
+.enemy0 {
+    position : absolute;
+    width : 20px;
+    height : 20px;
+    background-color:crimson;
+    top:var(--y-enemy0);
+    left:var(--x-enemy0);
+}
+.enemy1 {
+    position : absolute;
+    width : 20px;
+    height : 20px;
+    background-color : crimson;
+    top:var(--y-enemy1);
+    left:var(--x-enemy1);
+}
+.enemy2 {
+    position : absolute;
+    width : 20px;
+    height : 20px;
+    background-color : crimson;
+    top:var(--y-enemy2);
+    left:var(--x-enemy2);
+}
+.enemy3 {
+    position : absolute;
+    width : 20px;
+    height : 20px;
+    background-color : crimson;
+    top:var(--y-enemy3);
+    left:var(--x-enemy3);
+}

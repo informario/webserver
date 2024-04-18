@@ -22,8 +22,8 @@ fn main() {
         let stream = stream.unwrap();
         handle_connection(stream);
     }
+    println!("END");
 }
-
 
 fn handle_connection(mut stream: TcpStream) {
     
@@ -40,18 +40,48 @@ fn handle_connection(mut stream: TcpStream) {
             return;
         }
     };
-    let (status_line, filename) = if request_line == "GET / HTTP/1.1" {
-        ("HTTP/1.1 200 OK", "hello.html")
-    } else {
-        ("HTTP/1.1 404 NOT FOUND", "404.html")
-    };
-
-    let contents = match fs::read_to_string(filename){
-        Ok(s) => s,
-        Err(e) => {
-            println!("{}", e);
+    let first_space_index = match request_line.find(' ') {
+        Some(s)=>s,
+        None=>{
+            println!("No spaces found in request line");
             return;
         }
+    };
+    let second_space_index = match request_line[first_space_index+1..].find(' ') {
+        Some(s)=>s+first_space_index+1,
+        None=>{
+            println!("Not enough spaces found in request line");
+            return;
+        }
+    };
+
+    let method:&str = &request_line[0..first_space_index];
+    let address:&str = &request_line[first_space_index+1..second_space_index];
+    let _http_version:&str = &request_line[second_space_index..];
+    //println!("{} {}",first_space_index,second_space_index);
+    //println!("method:{}, address:{}, http_version:{}", method, address, http_version);
+    let (status_line, filename) = match method{
+        "GET"=>{
+            ("HTTP/1.1 200 OK", format!("website{}",address))
+        },
+        _=>{
+            println!("{}",request_line);
+            ("HTTP/1.1 404 NOT FOUND", String::from("website/404.html"))
+        }
+    };    
+
+    let contents = match fs::read_to_string(&filename){
+        Ok(s) => s,
+        Err(_e) => {
+            println!("failed filename: {}", filename);
+            match fs::read_to_string("website/404.html"){
+            Ok(s) =>s,
+            Err(e)=>{
+                println!("{}", e);
+                return
+            }
+        }}
+        
     };
     let length = contents.len();
 

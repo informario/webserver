@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InforMario</title>
+    <link href="styles.css" rel="stylesheet"/>  
+  <body>
+    <h1 id="title">Crea una cuenta ahora</h1>
+    <p id="description">Podrás subir imágenes y un texto descriptivo en el tablón de la comunidad, aparte de recibir notificaciones en tu correo (si lo deseas) cuando haya actualizaciones de relevancia en esta página</p>
+
+    <form id="survey-form" method="post" action=""><!--AGREGAR LINK ACÁ-->
+      <fieldset>
+        <label id="name-label">Ingresá tu nombre:<input id="name" name="nombre" type="text" required></label>
+        <label id="surname-label">Ingresá tu Apellido:<input id="apellido" name="apellido" type="text" required></label>
+        <label id="email-label">Ingresá tu correo electrónico:<input id="email" name="email" type="email" required></label>
+        <label>Crea una contraseña:<input id="password" name="password" type="password" pattern="([a-zA-Z\d]){8,}" required></label>
+        <p type="aclaracion">La contraseña debe constar de caracteres  alfanuméricos, y al menos 8 de ellos</p>
+      </fieldset>
+
+      <fieldset>
+        <label><input id="novedades" type="checkbox" name="novedades" class="inline" />Deseo recibir correos con las novedades (recomendado)</label>
+      </fieldset>
+
+      <fieldset>
+        <label for="age">Ingresá tu edad: <input id="number" type="number" name="age" min="13" max="120"></label>
+        <label id="referal-label">De donde nos conocemos?:
+          <select id="referrer" name="referrer">
+            <option value="">(Elige una)</option>
+            <option value="1">Amigo o conocido</option>
+            <option value="2">Relación laboral</option>
+            <option value="3">Redes sociales</option>
+            <option value="4">Otro</option>
+          </select></label>
+      </fieldset>
+      <input type="submit" value="Registrarse" />
+    </form>
+  </body>
+</html>
