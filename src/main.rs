@@ -3,6 +3,7 @@ use std::net::TcpStream;
 use std::io::BufReader;
 use std::io::prelude::*;
 use std::fs;
+use std::env;
 
 /*Un bind a una dirección genera un listener
 un listener tiene un iterador incoming, de varios streams
@@ -10,7 +11,11 @@ un listener tiene un iterador incoming, de varios streams
 
 
 fn main() {
-    let listener = match TcpListener::bind("192.168.0.78:8996"){
+    let args:Vec<String> = env::args().collect();
+    if args.len() <2{
+        return
+    }
+    let listener = match TcpListener::bind(&args[1]){
         Ok(s) => s,
         Err(e) => {
             println!("{}", e);
@@ -28,7 +33,8 @@ fn main() {
 fn handle_connection(mut stream: TcpStream) {
     
     let buf_reader = BufReader::new(&mut stream);
-    let request_line = buf_reader.lines().next();
+    let mut lines = buf_reader.lines();
+    let request_line = lines.next();
     let request_line = match request_line {
         Some(s) => s,
         None => return,
@@ -57,36 +63,51 @@ fn handle_connection(mut stream: TcpStream) {
 
     let method:&str = &request_line[0..first_space_index];
     let address:&str = &request_line[first_space_index+1..second_space_index];
-    let _http_version:&str = &request_line[second_space_index..];
+    let http_version:&str = &request_line[second_space_index..];
     //println!("{} {}",first_space_index,second_space_index);
-    //println!("method:{}, address:{}, http_version:{}", method, address, http_version);
+    //println!("method:{}, address:{}, http_version:{}", method, address, http_version);s
+
     let (status_line, filename) = match method{
         "GET"=>{
             ("HTTP/1.1 200 OK", format!("website{}",address))
+        },
+        "POST"=>{
+            println!("address:{}, http_version:{}, method:POST", address, http_version);
+            ("HTTP/1.1 200 OK", "received".to_string())
+            
         },
         _=>{
             println!("{}",request_line);
             ("HTTP/1.1 404 NOT FOUND", String::from("website/404.html"))
         }
     };    
-
-    let contents = match fs::read_to_string(&filename){
-        Ok(s) => s,
-        Err(_e) => {
-            println!("failed filename: {}", filename);
-            match fs::read_to_string("website/404.html"){
-            Ok(s) =>s,
-            Err(e)=>{
-                println!("{}", e);
-                return
+    if (method=="GET"){
+        let contents = match fs::read_to_string(&filename){
+            Ok(s) => s,
+            Err(_e) => {
+                println!("failed filename: {}", filename);
+                match fs::read_to_string("website/404.html"){
+                    Ok(s) =>s,
+                    Err(e)=>{
+                        println!("{}", e);
+                        return
+                    }
+                }
             }
-        }}
+        };
+        let length = contents.len(); 
+        let response =
+            format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+        stream.write_all(response.as_bytes()).unwrap();
+    }
+    else if method=="POST"{
         
-    };
-    let length = contents.len();
 
-    let response =
-        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+        let contents = fs::read_to_string("website/registro/registrado.html").unwrap();
+        let length = contents.len(); 
+        let response =
+            format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+        stream.write_all(response.as_bytes()).unwrap();
+    }
 
-    stream.write_all(response.as_bytes()).unwrap();
 }
